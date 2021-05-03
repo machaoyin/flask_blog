@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            {# 其他页面可以重写标题 #}
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/layui/layui.js"></script>
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+<div id="bg"></div>
+<ul class="layui-nav" lay-filter="">
+    <li class="layui-nav-item"><a href="/">在线博客平台</a></li>
+    {% if username %}
+        <li class="layui-nav-item{% block updatepwd_class %}{% endblock %}"><a href="/updatePwd">修改密码</a></li>
+    {% endif %}
+    <li class="layui-nav-item{% block blog_class %}{% endblock %}"><a href="/blog/blogAll">博客</a></li>
+    <li class="layui-nav-item{% block about_class %}{% endblock %}"><a href="/about">关于</a></li>
+    {% if username %}
+        <li class="layui-nav-item" style="float: right; margin-right: 30px;">
+            <a href="javascript:;">{{ name }}</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/blog/myBlog">我的博客</a></dd>
+                <dd><a href="/blog/myComment">我的评论</a></dd>
+                <dd><a href="/logout">注销</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item{% block write_class %}{% endblock %}" style="float: right"><a href="/blog/writeBlog">写博客</a></li>
+    {% else %}
+        <li class="layui-nav-item{% block register_class %}{% endblock %}" style="float: right"><a href="/register">注册</a></li>
+        <li class="layui-nav-item{% block login_class %}{% endblock %}" style="float: right"><a href="/login">登录</a></li>
+    {% endif %}
+</ul>
+
+<div class="content">
+    {% block content %}
+        {# 其他页面内容 #}
+    {% endblock %}
+</div>
+
+<script>
+layui.use('element', function(){
+    var element = layui.element;
+});
+</script>
+</body>
+</html>

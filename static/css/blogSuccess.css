@@ -1,0 +1,22 @@
+.home{
+    width: 600px;
+    margin: 10vh auto;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+}
+.home h1{
+    text-align: center;
+}
+.home img{
+    width: 60%;
+    display: inherit;
+    margin: 5% auto;
+}
+.home p{
+    font-size: 20px;
+    padding: 0px 15%;
+}
+.home a:last-child{
+    float: right;
+}

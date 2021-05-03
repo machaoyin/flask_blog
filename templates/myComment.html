@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.我的评论
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/blogAll.css">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <ul>
+            {% for comment in commentList %}
+                <li>
+                    <a class="title" href="/blog/showBlog/{{ comment.blog_id }}">{{ comment.text }}</a>
+                    <p>
+                        博客：<a href="/blog/showBlog/{{ comment.blog_id }}">{{ comment.blog.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp;评论时间：{{ comment.create_time }}
+                        <span class="operation">
+                            <a href="javascript:;" onclick="del('/blog/deleteCom/{{ comment.id }}', this)">删除</a>
+                        </span>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+         $(function (){
+            $(".title").each(function () {
+                $(this).html($(this).text());
+            });
+        })
+
+        function del(url, that){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['取消','确定']
+                }, function(index){
+                    layer.close(index);
+                }, function(){
+                    $.get(url, function (data){
+                        if(data.state){
+                            $(that).parent().parent().parent().remove();
+                            layer.msg(data.msg, {icon: 1});
+                        }
+                    })
+                });
+            });
+        }
+    </script>
+{% endblock %}
+

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.博客
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/editor/css/editormd.css"/>
+<link rel="stylesheet" href="/static/css/showBlog.css">
+<script src="/static/editor/lib/marked.min.js"></script>
+<script src="/static/editor/lib/prettify.min.js"></script>
+<script src="/static/editor/lib/raphael.min.js"></script>
+<script src="/static/editor/lib/underscore.min.js"></script>
+<script src="/static/editor/lib/sequence-diagram.min.js"></script>
+<script src="/static/editor/lib/flowchart.min.js"></script>
+<script src="/static/editor/lib/jquery.flowchart.min.js"></script>
+<script src="/static/editor/editormd.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <h1>{{ blog.title }}</h1>
+        <p>发布人：{{ blog.user.name }} &nbsp;&nbsp;&nbsp;&nbsp;发布时间：{{ blog.create_time }}</p>
+        <hr>
+        <div id="test">
+            <textarea>{{ blog.text }}</textarea>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>发表评论</legend>
+            <input type="hidden" id="blog_id" name="blogId" value="{{ blog.id }}">
+            <textarea id="lay_edit" lay-verify="content" name="text"></textarea>
+            <button type="button" class="layui-btn comSub">提交评论</button>
+        </fieldset>
+        <hr style="margin-top: 30px; margin-bottom: 20px;">
+        <ul class="comment">
+            {% for com in comment %}
+                <li>
+                    <p class="myText">{{ com.text }}</p>
+                    <p>评论人：{{ com.user.name }} &nbsp;&nbsp;&nbsp;&nbsp;发布时间：{{ com.create_time }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        $(function (){
+            $(".myText").each(function () {
+                $(this).html($(this).text());
+            });
+        })
+
+        editormd.markdownToHTML("test", {
+            htmlDecode: "style,script,iframe",
+            emoji: true,
+            taskList: true,
+            tex: true,  // 默认不解析
+            flowChart: true,  // 默认不解析
+            sequenceDiagram: true  // 默认不解析
+        });
+
+        layui.use(['layedit', 'form'], function () {
+            var form = layui.form;
+            var layedit = layui.layedit;
+            //创建一个编辑器
+            var index = layedit.build('lay_edit', {
+                height: 150,
+                tool: [
+                    'face', //表情
+                    '|', //分割线
+                    'link' //超链接
+                ]
+            });
+            $(".comSub").click(function (){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    {% if username %}
+                        //获取评论内容
+                        var text = layedit.getContent(index);
+                        var blogId = $("#blog_id").val();
+                        if(text == "" || text == undefined){
+                            layer.msg("评论不能为空哦！", {icon: 0});
+                        }else {
+                            $.post("/blog/comment", {text: text, blogId: blogId}, function (result) {
+                                if (result.success) {
+                                    window.location.href = '/blog/showBlog/' + blogId;
+                                }
+                            })
+                        }
+                    {% else %}
+                        layer.confirm('登录后在评论哦！', {
+                            btn: ['取消','登录']
+                        }, function(index){
+                            layer.close(index);
+                        }, function(){
+                            window.location.href = '/login';
+                        });
+                    {% endif %}
+                });
+            })
+        });
+    </script>
+{% endblock %}

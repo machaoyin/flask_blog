@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.博客
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/blogAll.css">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <ul>
+            {% for blog in blogList %}
+                <li>
+                    <a class="title" href="/blog/showBlog/{{ blog.id }}">{{ blog.title }}</a>
+                    <p>
+                        发布人：{{ blog.user.name }} &nbsp;&nbsp;&nbsp;&nbsp;发布时间：{{ blog.create_time }}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block blog_class %}
+    layui-this
+{% endblock %}
+

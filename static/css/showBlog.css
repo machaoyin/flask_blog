@@ -1,0 +1,34 @@
+.main > h1{
+    text-align: center;
+    padding-bottom: 20px;
+}
+.main > p{
+    padding: 0px 40px;
+    color: darkslateblue;
+}
+.main .text textarea{
+    display: none;
+}
+.editormd-html-preview {
+    padding: 0px;
+    padding-top: 15px;
+}
+#test{
+    margin-bottom: 30px;
+}
+legend{
+    margin-bottom: 20px;
+}
+.layui-field-title button{
+    margin-top: 20px;
+}
+.comment li{
+    padding: 0px 0px 8px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed firebrick;
+}
+.comment li p:first-child{
+    font-size: 18px;
+    margin: 8px 0px;
+}
+

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.我的博客
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/blogAll.css">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <ul>
+            {% for blog in blogList %}
+                <li>
+                    <a class="title" href="/blog/showBlog/{{ blog.id }}">{{ blog.title }}</a>
+                    <p>
+                        发布人：{{ blog.user.name }} &nbsp;&nbsp;&nbsp;&nbsp;发布时间：{{ blog.create_time }}
+                        <span class="operation">
+                            <a href="/blog/update/{{ blog.id }}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:;" onclick="del('/blog/delete/{{ blog.id }}', this)">删除</a>
+                        </span>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function del(url, that){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['取消','确定']
+                }, function(index){
+                    layer.close(index);
+                }, function(){
+                    $.get(url, function (data){
+                        if(data.state){
+                            $(that).parent().parent().parent().remove();
+                            layer.msg(data.msg, {icon: 1});
+                        }
+                    })
+                });
+            });
+        }
+    </script>
+{% endblock %}
+

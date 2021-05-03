@@ -1,0 +1,23 @@
+#bg{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: url('/static/img/login.jpg') no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+.content > h1{
+    color: white;
+    text-align: center;
+}
+.main{
+    width: 80%;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+}
+.layui-btn {
+    width: 105px;
+    border-radius: 20px;
+}

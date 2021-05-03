@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.登录
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/register.css">
+{% endblock %}
+
+{% block content %}
+    <div class="register">
+        <h1>登录</h1>
+        <p class="tip">
+            {% for item in get_flashed_messages() %}
+            {{ item }}
+            {% endfor %}
+        </p>
+        <form class="layui-form" action="login" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密  码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            form.on('submit(formDemo)', function(data){
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block login_class %}
+    layui-this
+{% endblock %}

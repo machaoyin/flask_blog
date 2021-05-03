@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    在线博客平台.修改密码
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/register.css">
+{% endblock %}
+
+{% block content %}
+    <div class="register">
+        <h1>修改密码</h1>
+        <p class="tip">
+            {% for item in get_flashed_messages() %}
+            {{ item }}
+            {% endfor %}
+        </p>
+        <form class="layui-form" action="updatePwd" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">原密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="lodPwd" required  lay-verify="required" placeholder="请输入原密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="newPwd1" required lay-verify="required" placeholder="请输入新密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认新密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="newPwd2" required lay-verify="required" placeholder="请再次输入新密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            form.on('submit(formDemo)', function(data){
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block updatepwd_class %}
+    layui-this
+{% endblock %}
